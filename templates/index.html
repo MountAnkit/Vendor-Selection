@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Selection AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="supplier-header">
+        <div class="ai-status">
+            <span class="pulse-dot"></span>
+            <span>Logged in as: {{ session.supplier_email }}</span>
+        </div>
+        <a href="{{ url_for('supplier_logout') }}" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
+
+    <div class="container">
+        <header class="analytics-header">
+            <h1 class="gradient-text">🚀 Vendor Selection AI</h1>
+            <div class="ai-status">
+                <span class="pulse-dot"></span>
+                <span>Supplier Evaluation System Active</span>
+            </div>
+        </header>
+
+        <form id="vendorForm" class="neon-form">
+            <!-- Existing form sections remain unchanged -->
+            <div class="form-grid">
+                <!-- Product Metrics -->
+                <div class="form-section">
+                    <h2><i class="fas fa-cube"></i> Product Metrics</h2>
+                    <div class="form-group">
+                        <input type="number" step="0.01" name="Price" required placeholder=" " value="54.86">
+                        <label class="floating-label">Price (₹)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="Availability" required placeholder=" " value="62">
+                        <label class="floating-label">Availability (%)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="Number of products sold" required placeholder=" " value="511">
+                        <label class="floating-label">Products Sold</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" step="0.01" name="Revenue generated" required placeholder=" " value="1752.38">
+                        <label class="floating-label">Revenue Generated (₹)</label>
+                    </div>
+                </div>
+        
+                <!-- Inventory Details -->
+                <div class="form-section">
+                    <h2><i class="fas fa-warehouse"></i> Inventory Details</h2>
+                    <div class="form-group">
+                        <input type="number" name="Stock levels" required placeholder=" " value="95">
+                        <label class="floating-label">Stock Levels</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="Lead times" required placeholder=" " value="1">
+                        <label class="floating-label">Lead Times (days)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="Order quantities" required placeholder=" " value="27">
+                        <label class="floating-label">Order Quantities</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="Shipping times" required placeholder=" " value="3">
+                        <label class="floating-label">Shipping Times (hrs)</label>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="form-grid">
+                <!-- Shipping & Costs -->
+                <div class="form-section">
+                    <h2><i class="fas fa-shipping-fast"></i> Shipping Details</h2>
+                    <div class="form-group">
+                        <select name="Shipping carriers" required>
+                            <option value=""></option>
+                            <option value="Carrier A">Carrier A</option>
+                            <option value="Carrier B" selected>Carrier B</option>
+                            <option value="Carrier C">Carrier C</option>
+                        </select>
+                        <label class="floating-label">Shipping Carrier</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" step="0.01" name="Shipping costs" required placeholder=" " value="9.70">
+                        <label class="floating-label">Shipping Cost (₹)</label>
+                    </div>
+                    <div class="form-group">
+                        <select name="Transportation modes" required>
+                            <option value=""></option>
+                            <option value="Road">Road</option>
+                            <option value="Air" selected>Air</option>
+                            <option value="Rail">Rail</option>
+                            <option value="Sea">Sea</option>
+                        </select>
+                        <label class="floating-label">Transportation Mode</label>
+                    </div>
+                </div>
+        
+                <!-- Supplier Details -->
+                <div class="form-section">
+                    <h2><i class="fas fa-industry"></i> Supplier Info</h2>
+                    <div class="form-group">
+                        <select name="Supplier name" required>
+                            <option value=""></option>
+                            <option value="Supplier 1">Supplier 1</option>
+                            <option value="Supplier 2">Supplier 2</option>
+                            <option value="Supplier 3">Supplier 3</option>
+                            <option value="Supplier 4" selected>Supplier 4</option>
+                            <option value="Supplier 5">Supplier 5</option>
+                        </select>
+                        <label class="floating-label">Supplier Name</label>
+                    </div>
+                    <div class="form-group">
+                        <select name="Location" required>
+                            <option value=""></option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Kolkata" selected>Kolkata</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Chennai">Chennai</option>
+                        </select>
+                        <label class="floating-label">Location</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="Lead time" required placeholder=" " value="9">
+                        <label class="floating-label">Lead Time (days)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="Production volumes" required placeholder=" " value="862">
+                        <label class="floating-label">Production Volume</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="Manufacturing lead time" required placeholder=" " value="7">
+                        <label class="floating-label">Mfg Lead Time (days)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" step="0.01" name="Manufacturing costs" required placeholder=" " value="77.63">
+                        <label class="floating-label">Mfg Costs (₹)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" step="0.01" name="Defect rates" required placeholder=" " value="1.36">
+                        <label class="floating-label">Defect Rate (%)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" step="0.01" name="Costs" required placeholder=" " value="208">
+                        <label class="floating-label">Total Costs (₹)</label>
+                    </div>
+                </div>
+            </div>
+        
+            <button type="submit" class="predict-button">
+                <i class="fas fa-brain-circuit"></i>
+                <span>Evaluate Supplier</span>
+                <div class="button-loader">
+                    <div class="bounce-dot"></div>
+                    <div class="bounce-dot"></div>
+                    <div class="bounce-dot"></div>
+                </div>
+            </button>
+        </form>
+
+        <div id="result" class="hidden">
+            <div class="result-header">
+                <h3>Supplier Evaluation Result</h3>
+                <div class="analysis-meta">
+                    <span class="timestamp"></span>
+                </div>
+            </div>
+            <div class="result-grid">
+                <div class="score-container">
+                    <div class="radial-progress" data-progress="0" style="--progress: 0%"></div>
+                </div>
+                <div class="insight-stack">
+                    <div class="insight-card">
+                        <div class="card-header">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>Vendor Recommendation</h4>
+                        </div>
+                        <p id="recommendationText" class="glow-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.querySelector('.theme-toggle i');
+            
+            body.classList.add('theme-transition');
+            setTimeout(() => body.classList.remove('theme-transition'), 500);
+            
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            themeIcon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Form Handling
+        let formSubmitted = sessionStorage.getItem('formSubmitted') === 'true';
+        let lastResult = JSON.parse(sessionStorage.getItem('lastResult') || '{}');
+
+        // Initialize form state
+        if(formSubmitted) {
+            disableForm();
+            if(lastResult.prediction !== undefined) {
+                showResults(lastResult);
+            }
+        }
+
+        function disableForm() {
+            const button = document.querySelector('.predict-button');
+            button.disabled = true;
+            button.style.opacity = '0.7';
+            button.innerHTML = '<i class="fas fa-check"></i> Supplier Selected';
+            document.getElementById('result').classList.remove('hidden');
+        }
+
+        document.getElementById('vendorForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if(formSubmitted) return;
+
+            const button = e.target.querySelector('button');
+            const resultDiv = document.getElementById('result');
+
+            try {
+                button.classList.add('loading');
+                resultDiv.classList.add('hidden');
+
+                const formData = new FormData(e.target);
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(formData)
+                });
+
+                const data = await response.json();
+                
+                if(data.status === 'success') {
+                    showResults(data);
+                    if(data.prediction === 1) {
+                        formSubmitted = true;
+                        sessionStorage.setItem('formSubmitted', 'true');
+                        sessionStorage.setItem('lastResult', JSON.stringify(data));
+                        disableForm();
+                    }
+                } else {
+                    showResults({
+                        prediction: -1,
+                        probability: 0,
+                        error: data.error
+                    });
+                }
+            } catch (error) {
+                showResults({
+                    prediction: -1,
+                    probability: 0,
+                    error: 'Network error. Please check your connection.'
+                });
+            } finally {
+                button.classList.remove('loading');
+            }
+        });
+
+        function showResults(data) {
+            const resultDiv = document.getElementById('result');
+            const recommendationText = document.getElementById('recommendationText');
+            const radial = document.querySelector('.radial-progress');
+
+            // Update radial progress
+            if(data.prediction !== -1) {
+                updateRadial(data.probability);
+                recommendationText.innerHTML = data.prediction === 1 ?
+                    `<span class="success-pulse">✅ Recommended Supplier</span> (Confidence: ${data.probability}%)` :
+                    `<span class="warning-pulse">❌ Not Recommended</span> (Confidence: ${data.probability}%)`;
+            } else {
+                radial.style.setProperty('--progress', '0%');
+                radial.setAttribute('data-progress', '0');
+                recommendationText.innerHTML = `<span class="error-pulse">⚠️ ${data.error}</span>`;
+            }
+
+            // Update timestamp
+            document.querySelector('.timestamp').textContent = new Date().toLocaleString();
+            resultDiv.classList.remove('hidden');
+        }
+
+        function updateRadial(percentage) {
+            const radial = document.querySelector('.radial-progress');
+            let progress = 0;
+            
+            const animation = setInterval(() => {
+                progress++;
+                radial.style.setProperty('--progress', `${progress}%`);
+                radial.setAttribute('data-progress', progress);
+                
+                if(progress >= percentage) clearInterval(animation);
+            }, 20);
+        }
+    </script>
+
+    <style>
+        .supplier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: -1rem auto 2rem;
+            padding: 1rem 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .logout-btn {
+            background: var(--accent-2);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .logout-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .predict-button:disabled {
+            cursor: not-allowed;
+            background: linear-gradient(135deg, #4B3F72, #3A3050);
+            opacity: 0.7;
+        }
+
+        .predict-button:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .error-pulse {
+            color: #FF6B6B;
+            animation: text-glow 1.5s ease-in-out infinite alternate;
+        }
+    </style>
+</body>
+</html>

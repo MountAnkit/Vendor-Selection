@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supplier Report</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            background: #1a1a2e;
+            color: white;
+            padding: 2rem;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .chart-container {
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #6C5CE7;
+            border-bottom: 2px solid #6C5CE7;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Supplier Performance Report</h1>
+    
+    <div class="chart-container" id="defectRateChart"></div>
+    <div class="chart-container" id="costDistributionChart"></div>
+    <div class="chart-container" id="performanceTrendChart"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/admin/chart_data')
+                .then(response => response.json())
+                .then(data => {
+                    renderDefectRates(data.defect_rates);
+                    renderCostDistribution(data.cost_distribution);
+                    renderPerformanceTrend(data.supplier_performance);
+                });
+
+            function renderDefectRates(data) {
+                const trace = {
+                    x: data.labels,
+                    y: data.values,
+                    type: 'bar',
+                    marker: { color: '#6C5CE7' }
+                };
+
+                const layout = {
+                    title: 'Average Defect Rates by Supplier',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    font: { color: '#fff' },
+                    xaxis: { title: 'Supplier' },
+                    yaxis: { title: 'Defect Rate (%)' }
+                };
+
+                Plotly.newPlot('defectRateChart', [trace], layout);
+            }
+
+            function renderCostDistribution(data) {
+                const trace = {
+                    labels: data.labels,
+                    values: data.values,
+                    type: 'pie',
+                    hole: 0.4,
+                    marker: { colors: ['#6C5CE7', '#4CAF50', '#FF6B6B', '#FFC107'] },
+                    textinfo: 'percent+label'
+                };
+
+                const layout = {
+                    title: 'Cost Distribution by Location',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    font: { color: '#fff' },
+                    showlegend: false
+                };
+
+                Plotly.newPlot('costDistributionChart', [trace], layout);
+            }
+
+            function renderPerformanceTrend(data) {
+                const trace = {
+                    x: data.dates,
+                    y: data.scores,
+                    mode: 'lines+markers',
+                    line: { color: '#4CAF50' },
+                    marker: { size: 8 }
+                };
+
+                const layout = {
+                    title: 'Confidence Score Trend Over Time',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    font: { color: '#fff' },
+                    xaxis: { title: 'Date' },
+                    yaxis: { title: 'Average Confidence Score (%)' }
+                };
+
+                Plotly.newPlot('performanceTrendChart', [trace], layout);
+            }
+        });
+    </script>
+</body>
+</html>

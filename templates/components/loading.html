@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processing...</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(rgba(26, 26, 46, 0.85), rgba(26, 26, 46, 0.9)),
+                      url('/static/4196339.jpg') center/cover fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Inter', system-ui;
+        }
+
+        .loading-container {
+            text-align: center;
+            background: rgba(26, 26, 46, 0.85);
+            padding: 3rem 4rem;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(108, 92, 231, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .neuro-spinner {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-1);
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 2rem;
+        }
+
+        .loading-text {
+            color: var(--text);
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <h2 class="gradient-text">Analyzing Vendor</h2>
+        <div class="neuro-spinner"></div>
+        <div class="loading-text">
+            <span class="pulse-dot"></span>
+            Processing supplier metrics...
+        </div>
+    </div>
+</body>
+</html>
